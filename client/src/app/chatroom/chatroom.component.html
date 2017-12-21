@@ -1,36 +1,73 @@
-<p>
-  Welcome blyat
-</p>
-<form (ngSubmit)="registrereNewChat()">
-  <div class="form-group">
-    <label for="chatroom">Name of the new Chatroom</label>
-    <input type="text"  class="form-control" id="chatroom"
-           required
-           [(ngModel)]="chatroom.chatRoomName" name="chatRoomName">
+<div class="body">
+  <div class="header">
+    <h1>Welcome {{currentUser.userName}}</h1>
   </div>
-  <button type="submit" class="btn btn-default">Register</button>
-</form>
-
-<h2>List of Existing Chatrooms</h2>
-
-<ul>
-  <li *ngFor="let chatroom of listofChatrooms">
-    <a>{{chatroom.chatRoomName}}</a><button (click)="myFunction(chatroom)">click</button>
-  </li>
-</ul>
-<hr>
-{{currentChatroom.chatRoomName}}
-
+  <div class="main-container">
+    <div class="col-md-4 create-chat">
+      <form (ngSubmit)="registrereNewChat()">
+        <div class="form-group">
+          <div class="header">
+            <label class="header" for="chatroom"><h3>Create a new Chatroom</h3></label>
+          </div>
+          <div class="input-group">
+          <input type="text"  class="form-control" id="chatroom"
+                required
+                [(ngModel)]="chatroom.chatRoomName" name="chatRoomName">
+                <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default">Register</button>
+                </span>
+              </div>
+        </div>
+        
+      </form>
+    </div>
+    <div class="col-md-4 create-chat">
+      <div class="header">
+        <h3>List of Existing Chatrooms</h3>
+      </div>
       <ul>
-        <li *ngFor="let msg of currentChatroomMsgs">
-          <a>{{mgs}}</a>
+        <li *ngFor="let chatroom of listofChatrooms">
+            <a class="btn btn-default btn-block" (click)="selectedRoom(chatroom)">{{chatroom.chatRoomName}}</a>
         </li>
       </ul>
-<form (ngSubmit)="addNewMessage()">
-  <div class="form-group">
-    <input type="text"  class="form-control"
-            required
-            [(ngModel)]="newmsg" name="newMsg">
+    </div>
   </div>
-  <button type="submit" class="btn btn-default">do Nothing</button>
-</form>
+  <hr>
+  <div [hidden]="hidden">
+    <div class="header">
+      <h3>{{currentChatroom.chatRoomName}}</h3>
+    </div>
+    <div class="chat-container">
+        <ul class="padding-leftright">
+            <li *ngFor="let msg of currentChatroomMsgs">
+              <div class="message">
+                <a>{{msg.userName}}:</a>
+                <a style="float:right">{{msg.msgBody}}</a>
+              </div>
+            </li>
+          </ul>
+    </div>
+    <form class="padding-leftright" (ngSubmit)="addNewMessage()">
+        <div class="input-group">
+          <input type="text"  class="form-control"
+                required
+                [(ngModel)]="newmsg" name="newMsg">
+              <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default">do Nothing</button>
+              </span>
+        </div>
+      </form>        
+  </div>
+</div>
+
+
+      
+
+<!-- <hr>
+<h2>List of current users online:</h2>
+<ul>
+  <li *ngFor="let user of currentChatroomUsers">
+    <a>{{user.userName}}</a>
+  </li>
+</ul>
+<hr> -->

@@ -1,0 +1,33 @@
+.body{
+    background-color: lightgrey;
+}
+
+.header {
+    text-align: center;
+}
+.main-container{
+    display:flex;
+}
+.create-chat {
+    width: 50%;
+}
+ul{
+    list-style-type: none;
+}
+
+.message {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+.padding-leftright {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+input, label{
+    display: inline-block;
+    vertical-align: middle;
+  }

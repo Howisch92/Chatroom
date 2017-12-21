@@ -13,8 +13,7 @@ export class UserService {
     private url = window.location.origin;
 
     getUsers (): Observable<User[]> {
-        let observable = new Observable(observer =>{
-            console.log("Socket:",this.url);
+        let observable = new Observable<User[]>(observer =>{
             this.socket = io(this.url);
             this.socket.on('getUsers', (data) => {
                 observer.next(data);
@@ -29,7 +28,6 @@ export class UserService {
     addUser (user: User): Observable<User> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        console.log(user);
         return this.http.post(this.postUserUrl, user, options)
             .map(this.extractData)
             .catch(this.handleError);
@@ -40,7 +38,6 @@ export class UserService {
      */
     private extractData(res: Response) {
         let body = res.json();
-        //console.log(body);
         return body || { };
     }
     private handleError (error: Response | any) {
@@ -53,7 +50,6 @@ export class UserService {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        //console.log(errMsg);
         return Observable.throw(errMsg);
     }
 }

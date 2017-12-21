@@ -9,7 +9,6 @@ router.get('/get', function(req, res, next) {
     schema.Messages.find({}).exec(function (err, messages) {
         if (err)
             return console.error(err);
-        console.log("Load success: ", messages);
         res.send(messages);
     });
 
@@ -20,9 +19,7 @@ router.post('/post', function(req, res, next) {
       schema.Messages.find({}).sort({_id:-1}).skip(10).exec(function (err, messages) {
           if (err)
               return console.error(err);
-          console.log("Loader success: ", messages);
           messages.forEach(function(message){
-              console.log("Loader success: ", message);
               schema.Messages.findByIdAndRemove(message._id).exec();
           });
       });
@@ -37,13 +34,11 @@ router.post('/post', function(req, res, next) {
 router.clients = [];
 router.addClient = function (client) {
     router.clients.push(client);
-    router.notifyclients(client);
 };
 router.notifyclients = function (client) {
     schema.Messages.find({}).exec(function (err, messages) {
         if (err)
             return console.error(err);
-        //console.log("Load success: ", users);
         var toNotify = client?new Array(client):router.clients;
         toNotify.forEach(function(socket){
             socket.emit('getMessages', messages);

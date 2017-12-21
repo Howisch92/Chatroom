@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "test": "mocha",
     "prepare": "node -e \"console.log(child_process.execSync(os.type()==='Windows_NT'?'npm.cmd install':'npm install', {cwd: 'client'}).toString('utf8'))\"",
     "build": "node -e \"console.log(child_process.execSync(os.type()==='Windows_NT'?'ng.cmd build --watch false --output-path dist':'ng build --watch false --output-path dist', {cwd: 'client'}).toString('utf8'))\"",
     "start": "node ./bin/www",
@@ -21,6 +22,7 @@
     "socket.io": "^1.7.3"
   },
   "devDependencies": {
-    "nodemon": "^1.12.1"
+    "nodemon": "^1.12.1",
+    "supertest": "^3.0.0"
   }
 }

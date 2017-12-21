@@ -5,8 +5,13 @@ var schema = require('../model/schema');
 var database = require('../model/database');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/get', function(req, res, next) {
+    schema.Users.find({}).exec(function (err, users) {
+        if (err)
+            return console.error(err);
+        res.send(users);
+    });
+
 });
 
 router.post('/post', function(req, res, next) {
@@ -14,9 +19,8 @@ router.post('/post', function(req, res, next) {
       schema.Users.find({}).sort({_id:-1}).skip(10).exec(function (err, users) {
           if (err)
               return console.error(err);
-              console.log("Loader success: ", users);
+
               users.forEach(function(user){
-              console.log("Loader success: ", user);
               schema.Users.findByIdAndRemove(user._id).exec();
           });
       });
@@ -37,7 +41,6 @@ router.notifyclients = function (client) {
     schema.Users.find({}).exec(function (err, users) {
         if (err)
             return console.error(err);
-        //console.log("Load success: ", users);
         var toNotify = client?new Array(client):router.clients;
         toNotify.forEach(function(socket){
             socket.emit('getUsers', users);

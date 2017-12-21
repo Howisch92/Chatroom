@@ -78,10 +78,9 @@ server.listen(port);
 server.on('error', onError);
 io.on('connection', function (socket) {
     console.log("New client connected");
-    // blog.addClient(socket);
-    // blog.notifyclients();
-    // chatRoom.addClient(socket);
-    // chatRoom.notifyClient();
+    chatRoom.addClient(socket);
+    messages.addClient(socket);
+    users.addClient(socket);
 });
 server.on('listening', onListening);
 

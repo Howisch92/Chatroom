@@ -1,10 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChatroomComponent } from './chatroom.component';
+import { Chatroom } from 'app/chatroom/chatroom';
+import { User } from 'app/user/user';
+import { Msg } from 'app/msg/msg';
 
 describe('ChatroomComponent', () => {
   let component: ChatroomComponent;
   let fixture: ComponentFixture<ChatroomComponent>;
+  let users : User[] = [];
+  let messages : Msg[] = [];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -22,4 +27,9 @@ describe('ChatroomComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create a chatroom', () => {
+    expect(new Chatroom('TestChatRoom',messages,users)).toBeDefined();
+  });
+  
 });

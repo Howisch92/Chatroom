@@ -9,6 +9,7 @@ exports.Users = mongoose.model('Users',exports.userSchema);
 
 exports.msgSchema = new Schema({
     msgBody:String,
+    userName: String,
     user: [ exports.userSchema ]
 });
 exports.Messages = mongoose.model('Messages',exports.msgSchema);

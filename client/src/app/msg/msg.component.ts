@@ -15,16 +15,14 @@ import { User } from 'app/user/user';
 export class MsgComponent implements OnInit {
   title = "Message Component Title";
   u2 = new User("Navn13");
-  message = new Msg(this.u2,"Im a New message");
+  message = new Msg(this.u2,this.u2.userName,"Im a New message");
   constructor(private MsgService: MsgService) { }
 
   submitMsg() {
     this.MsgService.addMsg(this.message)
       .subscribe(
         msg => {
-          // console.log("Messages:", messages);
           this.message = msg;
-          // this.getBlogs();
         },
         error =>  this.title = <any>error
       );

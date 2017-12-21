@@ -7,18 +7,14 @@ import { Msg } from 'app/msg/msg';
 
 @Injectable()
 export class MsgService {
-    private getMsgUrl = 'msg/get';  // URL to web API
-    private postMsgUrl = 'msg/post';  // URL to web API
+    private getMsgUrl = 'messages/get';  // URL to web API
+    private postMsgUrl = 'messages/post';  // URL to web API
     constructor (private http: Http) {}
     private socket;
     private url = window.location.origin;
 
-    /*
-     * Get blog messages from server
-     */
     getMsgs (): Observable<Msg[]> {
-        let observable = new Observable(observer =>{
-            console.log("Socket:",this.url);
+        let observable = new Observable<Msg[]>(observer =>{
             this.socket = io(this.url);
             this.socket.on('getMessages', (data) => {
                 observer.next(data);
@@ -31,24 +27,16 @@ export class MsgService {
         return observable;
     }
 
-    /*
-     * Send blog message to server
-     */
     addMsg (msg: Msg): Observable<Msg> {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-
         return this.http.post(this.postMsgUrl, msg, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
 
-    /*
-     * Data handlers
-     */
     private extractData(res: Response) {
         let body = res.json();
-        //console.log(body);
         return body || { };
     }
     private handleError (error: Response | any) {
@@ -61,7 +49,6 @@ export class MsgService {
         } else {
             errMsg = error.message ? error.message : error.toString();
         }
-        //console.log(errMsg);
         return Observable.throw(errMsg);
     }
 }
